@@ -25,4 +25,13 @@ export default [
       '@typescript-eslint/no-explicit-any': 'error',
     },
   },
+  {
+  "prettier/prettier": [
+    "error",
+    {
+      "singleQuote": true,
+      "parser": "flow"
+    }
+  ]
+}
 ];

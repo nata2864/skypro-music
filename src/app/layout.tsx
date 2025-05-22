@@ -11,6 +11,10 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: 'Skypro.Music',
   description: 'Музыкальный сервис для прослушивания и управления плейлистами',
+
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

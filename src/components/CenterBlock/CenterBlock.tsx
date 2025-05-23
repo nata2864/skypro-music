@@ -1,6 +1,7 @@
 import styles from './CenterBlock.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
+import Filter from '../Filter/Filter';
 
 export default function CenterBlock() {
   return (
@@ -17,12 +18,7 @@ export default function CenterBlock() {
         />
       </div>
       <h2 className={styles.centerblock__h2}>Треки</h2>
-      <div className={styles.centerblock__filter}>
-        <div className={styles.filter__title}>Искать по:</div>
-        <div className={styles.filter__button}>исполнителю</div>
-        <div className={styles.filter__button}>году выпуска</div>
-        <div className={styles.filter__button}>жанру</div>
-      </div>
+      <Filter></Filter>
       <div className={styles.centerblock__content}>
         <div className={styles.content__title}>
           <div className={classNames(styles.playlistTitle__col, styles.col01)}>

@@ -1,4 +1,17 @@
-export const data = [
+export type Track = {
+  _id: number;
+  name: string;
+  author: string;
+  release_date: string; // строка, а не Data!
+  genre: string[];
+  duration_in_seconds: number;
+  album: string;
+  logo: null;
+  track_file: string;
+  stared_user: any[];
+};
+
+export const data: Track[] = [
   {
     _id: 8,
     name: 'Chase',
@@ -51,7 +64,6 @@ export const data = [
       'https://webdev-music-003b5b991590.herokuapp.com/media/music_files/Mixkit_-_Secret_Garden.mp3',
     stared_user: [],
   },
-
   {
     _id: 12,
     name: 'A journey of successfull winners',

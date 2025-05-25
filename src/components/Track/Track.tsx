@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import styles from './Track.module.css';
+import type { Track } from '@/app/data'; 
 
+type TrackProps = {
+  item: Track;
+};
 
-//Пока не используется TypeScript использовала any
-export default function Track({item}:any) {
-
-  const {name, author, album} = item;
+export default function Track({ item }: TrackProps){
+  const { name, author, album } = item;
   return (
     <div className={styles.playlist__item}>
       <div className={styles.playlist__track}>
@@ -17,7 +19,7 @@ export default function Track({item}:any) {
           </div>
           <div className={styles['track__title-text']}>
             <Link className={styles.track__titleLink} href="">
-             {name}t <span className={styles.track__titleSpan}></span>
+             {name} <span className={styles.track__titleSpan}></span>
             </Link>
           </div>
         </div>

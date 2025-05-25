@@ -1,10 +1,15 @@
 import styles from './CenterBlock.module.css';
-import Link from 'next/link';
+// import Link from 'next/link';
 import classNames from 'classnames';
 import Filter from '../Filter/Filter';
 import Search from '../Search/Search';
+import Track from '../Track/Track';
+import { data } from '@/app/data';
 
 export default function CenterBlock({ title }: { title: string }) {
+
+
+
   return (
     <div className={styles.centerblock}>
       <Search />
@@ -27,7 +32,7 @@ export default function CenterBlock({ title }: { title: string }) {
             </svg>
           </div>
         </div>
-        <div className={styles.content__playlist}>
+        {/* <div className={styles.content__playlist}>
           <div className={styles.playlist__item}>
             <div className={styles.playlist__track}>
               <div className={styles.track__title}>
@@ -60,7 +65,19 @@ export default function CenterBlock({ title }: { title: string }) {
               </div>
             </div>
           </div>
-          {/* остальные треки — по аналогии */}
+       
+        </div> */}
+    <div className={styles.content__playlist}>
+{data.map((item, index) => {
+  return (
+    <Track 
+      key={index}
+      item={item}
+    />
+  );
+})}
+
+     
         </div>
       </div>
     </div>

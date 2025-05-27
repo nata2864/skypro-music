@@ -6,6 +6,8 @@ import Search from '../Search/Search';
 import Track from '../Track/Track';
 import { data } from '@/app/data';
 
+
+
 export default function CenterBlock({ title }: { title: string }) {
 
 
@@ -13,6 +15,7 @@ export default function CenterBlock({ title }: { title: string }) {
   return (
     <div className={styles.centerblock}>
       <Search />
+   
       <h2 className={styles.centerblock__h2}>{title}</h2>
       <Filter></Filter>
       <div className={styles.centerblock__content}>
@@ -32,41 +35,7 @@ export default function CenterBlock({ title }: { title: string }) {
             </svg>
           </div>
         </div>
-        {/* <div className={styles.content__playlist}>
-          <div className={styles.playlist__item}>
-            <div className={styles.playlist__track}>
-              <div className={styles.track__title}>
-                <div className={styles.track__titleImage}>
-                  <svg className={styles.track__titleSvg}>
-                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                  </svg>
-                </div>
-                <div className={styles['track__title-text']}>
-                  <Link className={styles.track__titleLink} href="">
-                    Guilt <span className={styles.track__titleSpan}></span>
-                  </Link>
-                </div>
-              </div>
-              <div className={styles.track__author}>
-                <Link className={styles.track__authorLink} href="">
-                  Nero
-                </Link>
-              </div>
-              <div className={styles.track__album}>
-                <Link className={styles.track__albumLink} href="">
-                  Welcome Reality
-                </Link>
-              </div>
-              <div className={styles.track__time}>
-                <svg className={styles.track__timeSvg}>
-                  <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
-                </svg>
-                <span className={styles.track__timeText}>4:44</span>
-              </div>
-            </div>
-          </div>
-       
-        </div> */}
+      
     <div className={styles.content__playlist}>
 {data.map((item, index) => {
   return (
@@ -76,10 +45,11 @@ export default function CenterBlock({ title }: { title: string }) {
     />
   );
 })}
-
      
         </div>
+      
       </div>
+   
     </div>
   );
 }

@@ -7,7 +7,7 @@ type TrackProps = {
 };
 
 export default function Track({ item }: TrackProps){
-  const { name, author, album } = item;
+  const { name, author, album,duration_in_seconds } = item;
   return (
     <div className={styles.playlist__item}>
       <div className={styles.playlist__track}>
@@ -37,7 +37,7 @@ export default function Track({ item }: TrackProps){
           <svg className={styles.track__timeSvg}>
             <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
           </svg>
-          <span className={styles.track__timeText}>4:44</span>
+          <span className={styles.track__timeText}>{duration_in_seconds}</span>
         </div>
       </div>
     </div>

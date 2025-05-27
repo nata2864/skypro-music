@@ -1,0 +1,27 @@
+.wrapper {
+  width: 248px;
+  height: 305px;
+  padding: 34px;
+}
+
+.filter__list {
+  color: white;
+  display: flex;
+  gap: 24px;
+  max-height: 237px;
+  overflow-y: auto;
+  flex-direction: column;
+  max-width: 248px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(75, 73, 73, 1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+  }
+}

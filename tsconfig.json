@@ -22,7 +22,10 @@
       "@/*": ["./src/*"],
       "@components/*": ["./components/*"],
       "@utils/*": ["./utils/*"],
-      "@styles/*": ["./styles/*"]
+      "@styles/*": ["./styles/*"],
+      "@data/*": ["./data/*"],
+       "@sharesTypes/*": ["./sharesTypes/*"],
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

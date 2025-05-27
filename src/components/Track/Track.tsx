@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './Track.module.css';
-import type { Track } from '@/app/data'; 
+import type { Track } from '@/sharesTypes/sharesTypes';
+import { formatTime } from '@/utils/helper';
 
 type TrackProps = {
   item: Track;
@@ -37,7 +38,7 @@ export default function Track({ item }: TrackProps){
           <svg className={styles.track__timeSvg}>
             <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
           </svg>
-          <span className={styles.track__timeText}>{duration_in_seconds}</span>
+          <span className={styles.track__timeText}>{formatTime(duration_in_seconds)}</span>
         </div>
       </div>
     </div>

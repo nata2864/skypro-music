@@ -4,26 +4,26 @@ import classNames from 'classnames';
 
 type FilterItemProps = {
   title: string;
-  isActive:boolean;
-   onToggle: () => void;
+  isActive: boolean;
+  onToggle: () => void;
 };
 
-export default function FilterItem({ title, isActive, onToggle }: FilterItemProps) {
+export default function FilterItem({
+  title,
+  isActive,
+  onToggle,
+}: FilterItemProps) {
   return (
-  
-  <div className={styles.filterItemWrapper}>
-      <div className={classNames(styles.filter__button, {
-  [styles.active]: isActive,
-})} onClick={onToggle}>
+    <div className={styles.filterItemWrapper}>
+      <div
+        className={classNames(styles.filter__button, {
+          [styles.active]: isActive,
+        })}
+        onClick={onToggle}
+      >
         {title}
       </div>
-
-      {isActive && (
-        <div className={styles.popUpContainer}>
-          <PopUp />
-        </div>
-      )}
+      {isActive && <PopUp />}
     </div>
-  
- );
+  );
 }

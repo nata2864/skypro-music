@@ -24,10 +24,4 @@
   position: relative;
 }
 
-.popUpContainer {
-  margin-top: 10px;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-}
+

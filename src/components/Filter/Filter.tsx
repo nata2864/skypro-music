@@ -10,7 +10,6 @@ const filterTitles = ['исполнителю', 'году выпуска', 'жа
 type FilterTitle = (typeof filterTitles)[number];
 
 
-
 export default function Filter() {
   const [activeFilter, setActiveFilter] = useState<FilterTitle | null>(null);
 

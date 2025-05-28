@@ -3,7 +3,11 @@
   height: 305px;
   padding: 34px;
   background: rgba(49, 49, 49, 1);
-
+   margin-top: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
 }
 
 .filter__list {

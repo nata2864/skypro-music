@@ -7,9 +7,27 @@
   border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
-  color:white;
+  color: white;
+  cursor: pointer;
+}
+
+.active {
+  border-color: #ad61ff;
+  color: #ad61ff;
 }
 
 .filter__button:not(:last-child) {
   margin-right: 10px;
+}
+
+.filterItemWrapper {
+  position: relative;
+}
+
+.popUpContainer {
+  margin-top: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
 }

@@ -27,6 +27,8 @@
   justify-content: space-between;
 }
 
+
+/* Кнопки. Потом убрать */
 .btn-text {
   &:hover {
     border-color: #d9b6ff;

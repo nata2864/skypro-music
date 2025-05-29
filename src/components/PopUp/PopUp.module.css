@@ -1,9 +1,9 @@
 .wrapper {
   width: 248px;
-  height: 305px;
+  max-height: 305px;
   padding: 34px;
   background: rgba(49, 49, 49, 1);
-   margin-top: 10px;
+  margin-top: 10px;
   position: absolute;
   top: 100%;
   left: 0;

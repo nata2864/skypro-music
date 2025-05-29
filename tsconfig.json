@@ -24,7 +24,7 @@
       "@utils/*": ["./utils/*"],
       "@styles/*": ["./styles/*"],
       "@data/*": ["./data/*"],
-       "@sharesTypes/*": ["./sharesTypes/*"],
+      "@sharesTypes/*": ["./sharesTypes/*"],
 
     }
   },

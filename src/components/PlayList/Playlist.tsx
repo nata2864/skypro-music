@@ -1,17 +1,17 @@
+import TrackItem from '../Track/Track';
 import styles from './PlayList.module.css';
-import { data
-    
- } from '@/app/data';
- import Track from '../Track/Track';
+import {Track } from '@/sharesTypes/sharesTypes';
 
-export default function PlayList (){
-    return(<div className={styles.content__playlist}>
-  {data.map((item) => {
-    return <Track key={item._id} item={item} />;
-  })}
-</div>
-)
+type PlayListProps = {
+  data: Track [];
+};
+
+export default function PlayList({ data }: PlayListProps) {
+  return (
+    <div className={styles.content__playlist}>
+      {data.map((item) => {
+        return <TrackItem key={item._id} item={item} />;
+      })}
+    </div>
+  );
 }
-
-
-

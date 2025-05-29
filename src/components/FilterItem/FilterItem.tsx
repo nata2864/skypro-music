@@ -4,15 +4,12 @@ import classNames from 'classnames';
 
 type FilterItemProps = {
   title: string;
+  options: string[];
   isActive: boolean;
   onToggle: () => void;
 };
 
-export default function FilterItem({
-  title,
-  isActive,
-  onToggle,
-}: FilterItemProps) {
+export default function FilterItem({ title, options, isActive, onToggle }: FilterItemProps) {
   return (
     <div className={styles.filterItemWrapper}>
       <div
@@ -23,7 +20,7 @@ export default function FilterItem({
       >
         {title}
       </div>
-      {isActive && <PopUp />}
+      {isActive && <PopUp options={options} />}
     </div>
   );
 }

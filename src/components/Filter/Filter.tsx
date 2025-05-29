@@ -5,25 +5,44 @@ import FilterItem from '../FilterItem/FilterItem';
 import { useState } from 'react';
 
 // Константы фильтров позже вынести
-const filterTitles = ['исполнителю', 'году выпуска', 'жанру'] as const;
+// type Filter = {
+//   title: string;
+//   options: string[];
+// };
 
-type FilterTitle = (typeof filterTitles)[number];
+// // Если данные пока мокаются — пиши так:
+// const filters: Filter[] = [
+//     { title: 'исполнителю', options: ['Queen', 'ABBA', 'Ария','Queen', 'ABBA', 'Ария'] },
 
+//   { title: 'году выпуска', options: ['По умолчанию', 'Сначала новые', 'Сначала старые'] },
 
-export default function Filter() {
-  const [activeFilter, setActiveFilter] = useState<FilterTitle | null>(null);
+//     { title: 'жанру', options: ['Рок', 'Поп', 'Джаз'] }
+// ];
 
-const handleToggle = (title: FilterTitle)  => {
+type FilterProps = {
+   filters: {
+    title: string;
+    options: string[];
+  }[]
+}
+
+export default function Filter({filters}:FilterProps) {
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+
+const handleToggle = (title:string)  => {
   setActiveFilter((prev) => (prev === title ? null : title));
 };
   return (
     <div className={styles.centerblock__filter}>
       <div className={styles.filter__title}>Искать по:</div>
 
-      {filterTitles.map((title) => (
-        <FilterItem key={title} title={title} 
-          isActive={activeFilter === title}
-          onToggle={() => handleToggle(title)}
+   {filters.map(( filter ) => (
+        <FilterItem
+          key={filter.title}
+          title={filter.title}
+          options={filter.options}
+          isActive={activeFilter === filter.title}
+          onToggle={() => handleToggle(filter.title)}
         />
       ))}
     </div>

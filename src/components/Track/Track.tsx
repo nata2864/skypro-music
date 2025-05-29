@@ -7,7 +7,7 @@ type TrackProps = {
   item: Track;
 };
 
-export default function Track({ item }: TrackProps){
+export default function TrackItem({ item }: TrackProps){
   const { name, author, album,duration_in_seconds } = item;
   return (
     <div className={styles.playlist__item}>

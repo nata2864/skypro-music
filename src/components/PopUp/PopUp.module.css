@@ -10,8 +10,9 @@
   z-index: 1000;
 }
 
+
 .filter__list {
-  color: white;
+ 
   display: flex;
   gap: 24px;
   max-height: 237px;
@@ -30,4 +31,15 @@
   &::-webkit-scrollbar-thumb {
     background-color: white;
   }
+}
+
+.filter__item {
+ color: white;
+
+
+}
+
+.active {
+
+  color: #ad61ff;
 }

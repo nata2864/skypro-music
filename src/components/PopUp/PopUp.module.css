@@ -10,9 +10,7 @@
   z-index: 1000;
 }
 
-
 .filter__list {
- 
   display: flex;
   gap: 24px;
   max-height: 237px;
@@ -34,12 +32,8 @@
 }
 
 .filter__item {
- color: white;
-
-
+  color: white;
 }
-
 .active {
-
-  color: #ad61ff;
+  color: rgba(182, 114, 255, 1);
 }

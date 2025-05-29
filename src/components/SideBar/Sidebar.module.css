@@ -81,4 +81,5 @@
 .sidebar__img {
   width: 100%;
   height: auto;
+   aspect-ratio: 250 / 170; 
 }

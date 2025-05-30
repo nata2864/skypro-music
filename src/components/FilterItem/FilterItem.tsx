@@ -20,7 +20,7 @@ export default function FilterItem({ title, options, isActive, onToggle }: Filte
       >
         {title}
       </div>
-      {isActive && <PopUp options={options} />}
+      <PopUp options={options}  isVisible={isActive}  />
     </div>
   );
 }

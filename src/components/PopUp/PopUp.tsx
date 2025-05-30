@@ -7,9 +7,10 @@ import classNames from 'classnames';
 
 type PopUpProps = {
   options: string[];
+  isVisible: boolean;
 };
 
-export default function PopUp({ options }: PopUpProps){
+export default function PopUp({ options, isVisible }: PopUpProps){
   const [activeFilterItem, setActiveFilterItem] = useState<string | null>(null);
 
   const handleToggleItem = (itemName: string) => {
@@ -17,7 +18,7 @@ export default function PopUp({ options }: PopUpProps){
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{ display: isVisible ? 'block' : 'none' }}>
       <ul className={styles.filter__list}>
         {options.map((item,index) => {
           return (

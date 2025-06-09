@@ -1,0 +1,40 @@
+.wrapper {
+  width: 248px;
+  max-height: 305px;
+  padding: 34px;
+  background: rgba(49, 49, 49, 1);
+  margin-top: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  border-radius: 12px;
+}
+
+.filter__list {
+  display: flex;
+  gap: 24px;
+  max-height: 237px;
+  overflow-y: auto;
+  flex-direction: column;
+  max-width: 248px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(75, 73, 73, 1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+  }
+}
+
+.filter__item {
+  color: white;
+}
+.active {
+  color: rgba(182, 114, 255, 1);
+}

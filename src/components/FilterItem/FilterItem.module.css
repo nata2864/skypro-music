@@ -1,0 +1,24 @@
+.filter__button {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #ffffff;
+  border-radius: 60px;
+  padding: 6px 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.active {
+  border-color: rgba(154, 72, 241, 1);
+  color: rgba(182, 114, 255, 1);
+}
+
+.filter__button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.filterItemWrapper {
+  position: relative;
+}

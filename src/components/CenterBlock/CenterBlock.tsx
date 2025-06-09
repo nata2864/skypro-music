@@ -12,22 +12,23 @@ type FilterOption = {
   options: string[];
 };
 
-
-
 export default function CenterBlock({ title }: { title: string }) {
   const genres = getUniqueValuesByKey(data, 'genre');
   const authors = getUniqueValuesByKey(data, 'author');
 
   const filters: FilterOption[] = [
     { title: 'исполнителю', options: authors },
-    { title: 'году выпуска', options: ['По умолчанию', 'Сначала новые', 'Сначала старые'] },
-    { title: 'жанру', options: genres }
+    {
+      title: 'году выпуска',
+      options: ['По умолчанию', 'Сначала новые', 'Сначала старые'],
+    },
+    { title: 'жанру', options: genres },
   ];
   return (
     <div className={styles.centerblock}>
       <Search />
       <h2 className={styles.centerblock__h2}>{title}</h2>
-      <Filter filters={filters}/>
+      <Filter filters={filters} />
       <div className={styles.centerblock__content}>
         <PlayListHeader />
         <PlayList data={data} />

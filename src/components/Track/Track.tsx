@@ -1,3 +1,7 @@
+"use client";
+
+import { useAppDispatch } from '@store/store';
+import { setCurrentTrack } from '@store/features/trackSlice';
 import Link from 'next/link';
 import styles from './Track.module.css';
 import type { Track } from '@/sharesTypes/sharesTypes';
@@ -9,8 +13,9 @@ type TrackProps = {
 
 export default function TrackItem({ item }: TrackProps){
   const { name, author, album,duration_in_seconds } = item;
+   const dispatch = useAppDispatch();
   return (
-    <div className={styles.playlist__item}>
+    <div className={styles.playlist__item} onClick={() => dispatch(setCurrentTrack(item))}>
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>

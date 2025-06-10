@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
@@ -18,18 +17,15 @@ export const metadata: Metadata = {
   },
 };
 
-
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={montserrat.variable}>
+    <html lang="ru">
       <ReduxProvider>
-        <body >{children}</body>
+        <body className={montserrat.variable}>{children}</body>
       </ReduxProvider>
     </html>
   );

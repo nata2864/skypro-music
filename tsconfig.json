@@ -25,6 +25,7 @@
       "@styles/*": ["./styles/*"],
       "@data/*": ["./data/*"],
       "@sharesTypes/*": ["./sharesTypes/*"],
+      "@store/*": ["./store/*"],
 
     }
   },

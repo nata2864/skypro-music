@@ -15,7 +15,6 @@ export default function Bar() {
 
   useEffect(() => {
     if (currentTrack && audioRef.current) {
-      // audioRef.current.src = currentTrack.track_file;
       audioRef.current.play();
       dispatch(setIsPlay(true));
     }
@@ -45,7 +44,12 @@ export default function Bar() {
           <div className={styles.bar__player}>
             <audio ref={audioRef} src={currentTrack?.track_file}></audio>
             <div className={styles.player__controls}>
-              <div className={styles.player__btnPrev}>
+              <div
+                className={styles.player__btnPrev}
+                onClick={() => {
+                  alert('Еще не реализовано');
+                }}
+              >
                 <svg className={styles.player__btnPrevSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                 </svg>
@@ -64,13 +68,21 @@ export default function Bar() {
                   </svg>
                 )}
               </div>
-              <div className={styles.player__btnNext}>
+              <div
+                className={styles.player__btnNext}
+                onClick={() => {
+                  alert('Еще не реализовано');
+                }}
+              >
                 <svg className={styles.player__btnNextSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
               <div
                 className={classNames(styles.player__btnRepeat, styles.btnIcon)}
+                onClick={() => {
+                  alert('Еще не реализовано');
+                }}
               >
                 <svg className={styles.player__btnRepeatSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
@@ -81,6 +93,9 @@ export default function Bar() {
                   styles.player__btnShuffle,
                   styles.btnIcon,
                 )}
+                onClick={() => {
+                  alert('Еще не реализовано');
+                }}
               >
                 <svg className={styles.player__btnShuffleSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>

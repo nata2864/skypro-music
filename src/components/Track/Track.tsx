@@ -1,11 +1,12 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { setCurrentTrack, setIsPlay } from '@store/features/trackSlice';
+import { setCurrentTrack } from '@store/features/trackSlice';
 import Link from 'next/link';
 import styles from './Track.module.css';
 import type { Track } from '@/sharesTypes/sharesTypes';
 import { formatTime } from '@/utils/helper';
+import classNames from 'classnames';
 
 type TrackProps = {
   item: Track;
@@ -15,6 +16,7 @@ export default function TrackItem({ item }: TrackProps) {
   const { name, author, album, duration_in_seconds } = item;
   const dispatch = useAppDispatch();
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
+    const isPlaying = useAppSelector((state) => state.tracks.isPlay);
 
   const handleClick = () => {
     dispatch(setCurrentTrack(item));
@@ -26,7 +28,7 @@ export default function TrackItem({ item }: TrackProps) {
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
             {currentTrack && currentTrack._id === item._id ? (
-              <span className={styles.playingDot}></span>
+              <span className={classNames(styles.playingDot,{[styles.active]:isPlaying})}></span>
             ) : (
               <svg className={styles.track__titleSvg}>
                 <use href="/img/icon/sprite.svg#icon-note" />

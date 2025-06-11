@@ -16,7 +16,7 @@ export default function TrackItem({ item }: TrackProps) {
   const { name, author, album, duration_in_seconds } = item;
   const dispatch = useAppDispatch();
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
-    const isPlaying = useAppSelector((state) => state.tracks.isPlay);
+  const isPlaying = useAppSelector((state) => state.tracks.isPlay);
 
   const handleClick = () => {
     dispatch(setCurrentTrack(item));
@@ -27,15 +27,18 @@ export default function TrackItem({ item }: TrackProps) {
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
-            {currentTrack && currentTrack._id === item._id ? (
-              <span className={classNames(styles.playingDot,{[styles.active]:isPlaying})}></span>
+            {currentTrack?._id === item._id ? (
+              <span
+                className={classNames(styles.playingDot, {
+                  [styles.active]: isPlaying,
+                })}
+              />
             ) : (
               <svg className={styles.track__titleSvg}>
                 <use href="/img/icon/sprite.svg#icon-note" />
               </svg>
             )}
           </div>
-
           <div className={styles['track__title-text']}>
             <Link className={styles.track__titleLink} href="#">
               {name} <span className={styles.track__titleSpan}></span>

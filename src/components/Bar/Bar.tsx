@@ -4,14 +4,16 @@ import styles from './Bar.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { setIsPlay } from '@store/features/trackSlice';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const isPlaying = useAppSelector((state) => state.tracks.isPlay);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audio = audioRef.current;
   const dispatch = useAppDispatch();
+  const [isRepeatActive, setIsRepeatActive] = useState(false);
 
   useEffect(() => {
     if (currentTrack && audioRef.current) {
@@ -23,8 +25,6 @@ export default function Bar() {
   if (!currentTrack) return <></>;
 
   const togglePlay = () => {
-    const audio = audioRef.current;
-
     if (!audio) return;
 
     if (isPlaying) {
@@ -36,13 +36,21 @@ export default function Bar() {
     }
   };
 
+  const toggleRepeat = () => {
+    setIsRepeatActive(!isRepeatActive);
+  };
+
   return (
     <div className={styles.bar}>
       <div className={styles.bar__content}>
         <div className={styles.bar__playerProgress}></div>
         <div className={styles.bar__playerBlock}>
           <div className={styles.bar__player}>
-            <audio ref={audioRef} src={currentTrack?.track_file}></audio>
+            <audio
+              ref={audioRef}
+              src={currentTrack?.track_file}
+              loop={isRepeatActive}
+            ></audio>
             <div className={styles.player__controls}>
               <div
                 className={styles.player__btnPrev}
@@ -79,10 +87,12 @@ export default function Bar() {
                 </svg>
               </div>
               <div
-                className={classNames(styles.player__btnRepeat, styles.btnIcon)}
-                onClick={() => {
-                  alert('Еще не реализовано');
-                }}
+                className={classNames(
+                  styles.player__btnRepeat,
+                  styles.btnIcon,
+                  { [styles.active]: isRepeatActive },
+                )}
+                onClick={toggleRepeat}
               >
                 <svg className={styles.player__btnRepeatSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>

@@ -333,7 +333,13 @@
   cursor: pointer;
 }
 
-.btnIcon:active svg {
+/* .btnIcon:active svg {
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+} */
+
+.active svg{
   fill: transparent;
   stroke: #ffffff;
   cursor: pointer;

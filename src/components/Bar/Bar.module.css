@@ -16,6 +16,16 @@
   flex-direction: column;
 }
 
+.timeDisplay {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: right;
+  color: #696969;
+  margin-right: 90px;
+}
+
 .bar__playerProgress {
   width: 100%;
   height: 5px;
@@ -339,7 +349,7 @@
   cursor: pointer;
 } */
 
-.active svg{
+.active svg {
   fill: transparent;
   stroke: #ffffff;
   cursor: pointer;

@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '@store/store';
 import { useRef, useEffect, useState } from 'react';
 import { setIsPlay } from '@store/features/trackSlice';
+import { getTimePanel } from '@/utils/helper';
+// import ProgressBar from '../ProgressBar/ProgressBar';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
@@ -14,6 +16,8 @@ export default function Bar() {
   const audio = audioRef.current;
   const dispatch = useAppDispatch();
   const [isRepeatActive, setIsRepeatActive] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     if (currentTrack && audioRef.current) {
@@ -24,7 +28,7 @@ export default function Bar() {
 
   if (!currentTrack) return <></>;
 
-  const togglePlay = () => {
+  const onTogglePlay = () => {
     if (!audio) return;
 
     if (isPlaying) {
@@ -36,20 +40,31 @@ export default function Bar() {
     }
   };
 
-  const toggleRepeat = () => {
+  const onToggleRepeat = () => {
     setIsRepeatActive(!isRepeatActive);
   };
 
+  const onTimeUpdate = () => {
+    if (audio) {
+      setCurrentTime(audio.currentTime);
+      setDuration(audio.duration);
+    }
+  };
   return (
     <div className={styles.bar}>
       <div className={styles.bar__content}>
+        <div className={styles.timeDisplay}>
+          {getTimePanel(currentTime, duration)}
+        </div>
         <div className={styles.bar__playerProgress}></div>
+        {/* <ProgressBar/> */}
         <div className={styles.bar__playerBlock}>
           <div className={styles.bar__player}>
             <audio
               ref={audioRef}
               src={currentTrack?.track_file}
               loop={isRepeatActive}
+              onTimeUpdate={onTimeUpdate}
             ></audio>
             <div className={styles.player__controls}>
               <div
@@ -64,7 +79,7 @@ export default function Bar() {
               </div>
               <div
                 className={classNames(styles.player__btnPlay, styles.btn)}
-                onClick={togglePlay}
+                onClick={onTogglePlay}
               >
                 {isPlaying ? (
                   <svg className={styles.player__btnPlaySvg}>
@@ -92,7 +107,7 @@ export default function Bar() {
                   styles.btnIcon,
                   { [styles.active]: isRepeatActive },
                 )}
-                onClick={toggleRepeat}
+                onClick={onToggleRepeat}
               >
                 <svg className={styles.player__btnRepeatSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>

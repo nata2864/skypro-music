@@ -13,22 +13,22 @@ export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const isPlaying = useAppSelector((state) => state.tracks.isPlay);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audio = audioRef.current;
+  const getAudio = () => audioRef.current;
   const dispatch = useAppDispatch();
   const [isRepeatActive, setIsRepeatActive] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    if (currentTrack && audioRef.current) {
-      audioRef.current.play();
-      dispatch(setIsPlay(true));
+    if (currentTrack && getAudio()) {
+      getAudio()?.load();
     }
   }, [currentTrack]);
 
-  if (!currentTrack) return <></>;
+  if (!currentTrack) return null;
 
   const onTogglePlay = () => {
+    const audio = getAudio();
     if (!audio) return;
 
     if (isPlaying) {
@@ -44,17 +44,34 @@ export default function Bar() {
     setIsRepeatActive(!isRepeatActive);
   };
 
+  const onLoadedMetadata = () => {
+    const audio = getAudio();
+    if (audio) {
+      setDuration(audio.duration);
+      setCurrentTime(audio.currentTime);
+      audio.play();
+      dispatch(setIsPlay(true));
+    }
+  };
+
   const onTimeUpdate = () => {
+    const audio = getAudio();
     if (audio) {
       setCurrentTime(audio.currentTime);
       setDuration(audio.duration);
     }
   };
+
+  const renderTimePanel = () => {
+  return duration > 0 ? getTimePanel(currentTime, duration) : null;
+};
+
+
   return (
     <div className={styles.bar}>
       <div className={styles.bar__content}>
         <div className={styles.timeDisplay}>
-          {getTimePanel(currentTime, duration)}
+          {renderTimePanel()}
         </div>
         <div className={styles.bar__playerProgress}></div>
         {/* <ProgressBar/> */}
@@ -65,6 +82,7 @@ export default function Bar() {
               src={currentTrack?.track_file}
               loop={isRepeatActive}
               onTimeUpdate={onTimeUpdate}
+              onLoadedMetadata={onLoadedMetadata}
             ></audio>
             <div className={styles.player__controls}>
               <div

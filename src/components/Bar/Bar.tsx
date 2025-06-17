@@ -18,12 +18,20 @@ export default function Bar() {
   const [isRepeatActive, setIsRepeatActive] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.5);
 
   useEffect(() => {
     if (currentTrack && getAudio()) {
       getAudio()?.load();
     }
   }, [currentTrack]);
+
+  useEffect(() => {
+    const audio = getAudio();
+    if (audio) {
+      audio.volume = volume;
+    }
+  }, [volume]);
 
   if (!currentTrack) return null;
 
@@ -61,18 +69,18 @@ export default function Bar() {
       setDuration(audio.duration);
     }
   };
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(parseFloat(e.target.value));
+  };
 
   const renderTimePanel = () => {
-  return duration > 0 ? getTimePanel(currentTime, duration) : null;
-};
-
+    return duration > 0 ? getTimePanel(currentTime, duration) : null;
+  };
 
   return (
     <div className={styles.bar}>
       <div className={styles.bar__content}>
-        <div className={styles.timeDisplay}>
-          {renderTimePanel()}
-        </div>
+        <div className={styles.timeDisplay}>{renderTimePanel()}</div>
         <div className={styles.bar__playerProgress}></div>
         {/* <ProgressBar/> */}
         <div className={styles.bar__playerBlock}>
@@ -202,6 +210,11 @@ export default function Bar() {
                   )}
                   type="range"
                   name="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
                 />
               </div>
             </div>

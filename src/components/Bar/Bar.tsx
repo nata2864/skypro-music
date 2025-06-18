@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@store/store';
 import { useRef, useEffect, useState } from 'react';
 import { setIsPlay } from '@store/features/trackSlice';
 import { getTimePanel } from '@/utils/helper';
-// import ProgressBar from '../ProgressBar/ProgressBar';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
@@ -19,6 +19,7 @@ export default function Bar() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  // const [currentTimProgress, setCurrentTimeProgress] = useState(0);
 
   useEffect(() => {
     if (currentTrack && getAudio()) {
@@ -77,12 +78,27 @@ export default function Bar() {
     return duration > 0 ? getTimePanel(currentTime, duration) : null;
   };
 
+  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = getAudio();
+    const newTime = parseFloat(e.target.value);
+    if (audio) {
+      audio.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   return (
     <div className={styles.bar}>
       <div className={styles.bar__content}>
         <div className={styles.timeDisplay}>{renderTimePanel()}</div>
-        <div className={styles.bar__playerProgress}></div>
-        {/* <ProgressBar/> */}
+
+        <ProgressBar
+          max={duration}
+          value={currentTime}
+          step={0.1}
+          onChange={handleProgressChange}
+          disabled={!audioRef.current}
+        />
         <div className={styles.bar__playerBlock}>
           <div className={styles.bar__player}>
             <audio

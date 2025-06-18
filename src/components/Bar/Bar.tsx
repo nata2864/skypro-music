@@ -19,7 +19,6 @@ export default function Bar() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  // const [currentTimProgress, setCurrentTimeProgress] = useState(0);
 
   useEffect(() => {
     if (currentTrack && getAudio()) {

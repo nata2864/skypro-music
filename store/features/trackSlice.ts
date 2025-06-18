@@ -4,13 +4,13 @@ import { Track } from '@/sharesTypes/sharesTypes';
 type initialStateType = {
   currentTrack: Track | null;
   isPlay: boolean;
-
+playList:Track[]
 };
 
 const initialState: initialStateType = {
   currentTrack: null,
   isPlay: false,
-
+playList:[]
 };
 
 const trackSlice = createSlice({
@@ -23,10 +23,13 @@ const trackSlice = createSlice({
     setIsPlay: (state, action: PayloadAction<boolean>) => {
       state.isPlay = action.payload;
     },
+     setCurrentPlayList: (state,action: PayloadAction<Track[]>) => {
+      state.playList = action.payload;
+    },
   
   },
 });
 
-export const { setCurrentTrack, setIsPlay } = trackSlice.actions;
+export const { setCurrentTrack, setIsPlay,setCurrentPlayList } = trackSlice.actions;
 
 export const trackSliceReducer = trackSlice.reducer;

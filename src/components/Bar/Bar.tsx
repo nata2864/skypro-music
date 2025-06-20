@@ -8,11 +8,16 @@ import { useRef, useEffect, useState } from 'react';
 import { setIsPlay } from '@store/features/trackSlice';
 import { getTimePanel } from '@/utils/helper';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { setNextTrack, setPreviousTrack } from '@store/features/trackSlice';
+import {
+  setNextTrack,
+  setPreviousTrack,
+  toggleShuffle,
+} from '@store/features/trackSlice';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const isPlaying = useAppSelector((state) => state.tracks.isPlay);
+  const isShuffle = useAppSelector((state) => state.tracks.isShuffle);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const getAudio = () => audioRef.current;
   const dispatch = useAppDispatch();
@@ -51,6 +56,10 @@ export default function Bar() {
 
   const onToggleRepeat = () => {
     setIsRepeatActive(!isRepeatActive);
+  };
+
+  const onShuffle = () => {
+    dispatch(toggleShuffle());
   };
 
   const onLoadedMetadata = () => {
@@ -164,10 +173,9 @@ export default function Bar() {
                 className={classNames(
                   styles.player__btnShuffle,
                   styles.btnIcon,
+                  { [styles.active]: isShuffle },
                 )}
-                onClick={() => {
-                  alert('Еще не реализовано');
-                }}
+                onClick={onShuffle}
               >
                 <svg className={styles.player__btnShuffleSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>

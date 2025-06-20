@@ -1,16 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Track } from '@/sharesTypes/sharesTypes';
+import {shuffleArray} from '@/utils/random';
+import PlayList from '@/components/PlayList/Playlist';
 
 type initialStateType = {
   currentTrack: Track | null;
   isPlay: boolean;
+  isShuffle: boolean;
   playList: Track[];
+  shuffledPlayList: Track[];
 };
 
 const initialState: initialStateType = {
   currentTrack: null,
   isPlay: false,
+  isShuffle: false,
   playList: [],
+  shuffledPlayList: [],
 };
 
 function getCurrentIndexSafe(state: initialStateType): number | null {
@@ -37,29 +43,36 @@ const trackSlice = createSlice({
     },
     setCurrentPlayList: (state, action: PayloadAction<Track[]>) => {
       state.playList = action.payload;
+      state.shuffledPlayList = shuffleArray(action.payload);
+    },
+      toggleShuffle(state) {
+      state.isShuffle = !state.isShuffle;
     },
     setNextTrack(state) {
       const currentIndex = getCurrentIndexSafe(state);
+      const playList = state.isShuffle?state.shuffledPlayList:state.playList;
 
       if (currentIndex === null) return;
 
       const nextIndex = currentIndex + 1;
 
-      if (nextIndex < state.playList.length) {
-        state.currentTrack = state.playList[nextIndex];
+      if (nextIndex < playList.length) {
+        state.currentTrack = playList[nextIndex];
         state.isPlay = true;
       }
     },
     setPreviousTrack(state) {
       const currentIndex = getCurrentIndexSafe(state);
+       const playList = state.isShuffle?state.shuffledPlayList:state.playList;
       if (currentIndex === null) return;
 
       const previousIndex = currentIndex - 1;
       if (previousIndex >= 0) {
-        state.currentTrack = state.playList[previousIndex];
+        state.currentTrack = playList[previousIndex];
         state.isPlay = true;
       }
     },
+  
   },
 });
 
@@ -69,6 +82,7 @@ export const {
   setCurrentPlayList,
   setNextTrack,
   setPreviousTrack,
+  toggleShuffle,
 } = trackSlice.actions;
 
 export const trackSliceReducer = trackSlice.reducer;

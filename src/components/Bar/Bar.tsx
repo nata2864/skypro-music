@@ -8,6 +8,7 @@ import { useRef, useEffect, useState } from 'react';
 import { setIsPlay } from '@store/features/trackSlice';
 import { getTimePanel } from '@/utils/helper';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import { setNextTrack, setPreviousTrack } from '@store/features/trackSlice';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
@@ -86,6 +87,20 @@ export default function Bar() {
     }
   };
 
+  const onNextTrack = () => {
+    dispatch(setNextTrack());
+  };
+
+  const onPreviousTrack = () => {
+    dispatch(setPreviousTrack());
+  };
+
+  const onEndedTrack = () => {
+    if (!isRepeatActive) {
+      onNextTrack();
+    }
+  };
+
   return (
     <div className={styles.bar}>
       <div className={styles.bar__content}>
@@ -105,15 +120,11 @@ export default function Bar() {
               src={currentTrack?.track_file}
               loop={isRepeatActive}
               onTimeUpdate={onTimeUpdate}
+              onEnded={onEndedTrack}
               onLoadedMetadata={onLoadedMetadata}
             ></audio>
             <div className={styles.player__controls}>
-              <div
-                className={styles.player__btnPrev}
-                onClick={() => {
-                  alert('Еще не реализовано');
-                }}
-              >
+              <div className={styles.player__btnPrev} onClick={onPreviousTrack}>
                 <svg className={styles.player__btnPrevSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                 </svg>
@@ -132,12 +143,7 @@ export default function Bar() {
                   </svg>
                 )}
               </div>
-              <div
-                className={styles.player__btnNext}
-                onClick={() => {
-                  alert('Еще не реализовано');
-                }}
-              >
+              <div className={styles.player__btnNext} onClick={onNextTrack}>
                 <svg className={styles.player__btnNextSvg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                 </svg>
@@ -176,12 +182,12 @@ export default function Bar() {
                   </svg>
                 </div>
                 <div className={styles.trackPlay__author}>
-                  <Link className={styles.trackPlay__authorLink} href="">
+                  <Link className={styles.trackPlay__authorLink} href="#">
                     {currentTrack.name}
                   </Link>
                 </div>
                 <div className={styles.trackPlay__album}>
-                  <Link className={styles.trackPlay__albumLink} href="">
+                  <Link className={styles.trackPlay__albumLink} href="#">
                     {currentTrack.author}
                   </Link>
                 </div>

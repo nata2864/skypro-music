@@ -21,7 +21,7 @@ export default function ProgressBar({
       className={styles.styledProgressInput}
       type="range"
       min="0"
-      max={max}
+      max={isNaN(max) ? 0 : max}
       value={value}
       step={step}
       onChange={onChange}

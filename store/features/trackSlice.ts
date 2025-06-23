@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Track } from '@/sharesTypes/sharesTypes';
-import {shuffleArray} from '@/utils/random';
-import PlayList from '@/components/PlayList/Playlist';
+import { shuffleArray } from '@/utils/random';
 
 type initialStateType = {
   currentTrack: Track | null;
@@ -19,12 +18,18 @@ const initialState: initialStateType = {
   shuffledPlayList: [],
 };
 
+function getActivePlayList(state: initialStateType): Track[] {
+  return state.isShuffle ? state.shuffledPlayList : state.playList;
+}
+
 function getCurrentIndexSafe(state: initialStateType): number | null {
   if (!state.currentTrack || state.playList.length === 0) {
     return null;
   }
 
-  const index = state.playList.findIndex(
+  const playList = getActivePlayList(state);
+
+  const index = playList.findIndex(
     (track) => track._id === state.currentTrack!._id,
   );
 
@@ -45,34 +50,52 @@ const trackSlice = createSlice({
       state.playList = action.payload;
       state.shuffledPlayList = shuffleArray(action.payload);
     },
-      toggleShuffle(state) {
+    toggleShuffle(state) {
       state.isShuffle = !state.isShuffle;
+      if (state.isShuffle) {
+        state.shuffledPlayList = shuffleArray(state.playList);
+      }
     },
+
     setNextTrack(state) {
       const currentIndex = getCurrentIndexSafe(state);
-      const playList = state.isShuffle?state.shuffledPlayList:state.playList;
-
+      const playList = getActivePlayList(state);
       if (currentIndex === null) return;
 
-      const nextIndex = currentIndex + 1;
+      let nextIndex;
 
-      if (nextIndex < playList.length) {
-        state.currentTrack = playList[nextIndex];
-        state.isPlay = true;
+      if (state.isShuffle) {
+        nextIndex = (currentIndex + 1) % playList.length;
+      } else {
+        if (currentIndex >= playList.length - 1) {
+          return;
+        }
+        nextIndex = currentIndex + 1;
       }
+
+      state.currentTrack = playList[nextIndex];
+      state.isPlay = true;
     },
+
     setPreviousTrack(state) {
       const currentIndex = getCurrentIndexSafe(state);
-       const playList = state.isShuffle?state.shuffledPlayList:state.playList;
+      const playList = getActivePlayList(state);
       if (currentIndex === null) return;
 
-      const previousIndex = currentIndex - 1;
-      if (previousIndex >= 0) {
-        state.currentTrack = playList[previousIndex];
-        state.isPlay = true;
+      let previousIndex;
+
+      if (state.isShuffle) {
+        previousIndex = (currentIndex - 1 + playList.length) % playList.length;
+      } else {
+        if (currentIndex <= 0) {
+          return;
+        }
+        previousIndex = currentIndex - 1;
       }
+
+      state.currentTrack = playList[previousIndex];
+      state.isPlay = true;
     },
-  
   },
 });
 

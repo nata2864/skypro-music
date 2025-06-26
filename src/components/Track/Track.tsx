@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@store/store';
-import { setCurrentTrack } from '@store/features/trackSlice';
+import { setCurrentPlayList, setCurrentTrack } from '@store/features/trackSlice';
 import Link from 'next/link';
 import styles from './Track.module.css';
 import type { Track } from '@/sharesTypes/sharesTypes';
@@ -10,9 +10,10 @@ import classNames from 'classnames';
 
 type TrackProps = {
   item: Track;
+  playList:Track[]
 };
 
-export default function TrackItem({ item }: TrackProps) {
+export default function TrackItem({item , playList }: TrackProps) {
   const { name, author, album, duration_in_seconds } = item;
   const dispatch = useAppDispatch();
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
@@ -20,6 +21,7 @@ export default function TrackItem({ item }: TrackProps) {
 
   const handleClick = () => {
     dispatch(setCurrentTrack(item));
+    dispatch(setCurrentPlayList(playList))
   };
 
   return (

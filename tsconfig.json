@@ -26,6 +26,8 @@
       "@data/*": ["./data/*"],
       "@sharesTypes/*": ["./sharesTypes/*"],
       "@store/*": ["./store/*"],
+       "@api/*": ["./api/*"],
+        "@services/*": ["./services/*"],
 
     }
   },

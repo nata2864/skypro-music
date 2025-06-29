@@ -19,4 +19,21 @@ export async function signInUser() {
   }
 }
 
+export async function signUpUser() {
+  try {
+    const response = await api.post(
+      API_ENDPOINTS.SIGN_UP,
+      {}, 
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.message || 'Ошибка запроса');
+  }
+}
+
 

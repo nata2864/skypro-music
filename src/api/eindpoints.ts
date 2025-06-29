@@ -1,5 +1,7 @@
 export const API_ENDPOINTS = {
   GET_ALL_TRACKS: '/catalog/track/all/',
+  SIGN_IN: '/user/login/',
+  SIGN_UP: '/user/signup/',
   // GET_TRACK_BY_ID: (id) => `/catalog/track/${id}/`,
   // GET_FAVORITES: '/catalog/track/favorite/all/',
   // ADD_TO_FAVORITES: (id) => `/catalog/track/${id}/favorite/`,

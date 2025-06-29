@@ -5,6 +5,7 @@ import { fetchAllTracks } from '@/services/tracks/tracksApi';
 import { Track } from '@/sharesTypes/sharesTypes';
 import { AxiosError } from 'axios';
 import { useEffect, useCallback, useState } from 'react';
+import { ERROR_MESSAGES } from '@/constans/errorMessages';
 
 export default function Home() {
   const [tracks, setTracks] = useState<Track[]>([]);
@@ -21,10 +22,10 @@ export default function Home() {
           setError(error.response.data);
         } else if (error.request) {
           console.log(error.request);
-          setError('Что-то с интернетом');
+          setError(ERROR_MESSAGES.NETWORK_ERROR);
         } else {
           console.log('Error', error.message);
-          setError('Неизвестная ошибка');
+          setError(ERROR_MESSAGES.UNKNOWN_ERROR);
         }
       }
     }

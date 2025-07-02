@@ -21,7 +21,7 @@ export default function SighUpPage() {
     <>
       <input
         className={classNames(styles.modal__input, styles.login)}
-        type="text"
+        type="email"
         name="login"
         placeholder="Почта"
         onChange={handleChange}

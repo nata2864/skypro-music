@@ -10,3 +10,11 @@ export type Track = {
   track_file: string;
   stared_user: any[];
 };
+
+export type CategoryTrack = {
+ items: number[];        
+  name: string;           
+  owner: number[];        
+  __v: number;
+  _id: number;   
+};

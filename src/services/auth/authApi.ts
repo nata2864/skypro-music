@@ -1,12 +1,18 @@
 import { API_ENDPOINTS } from '../../api/eindpoints';
 import api from '@/api/axious';
 
+type signInUserProps = {
+  login: string,
+  password:string
+}
 
-export async function signInUser() {
+
+
+export async function signInUser(data:signInUserProps) {
   try {
     const response = await api.post(
       API_ENDPOINTS.SIGN_IN,
-      {}, 
+     data, 
       {
         headers: {
           "Content-Type": "application/json",

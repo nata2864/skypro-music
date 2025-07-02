@@ -3,33 +3,37 @@
 import CenterBlock from '@/components/CenterBlock/CenterBlock';
 import { fetchTracksByID } from '@/services/tracks/tracksApi';
 import { useParams } from 'next/navigation';
-import { useCallback,useEffect,useState } from 'react';
-// import { Track } from '@/sharesTypes/sharesTypes';
+import { useCallback, useEffect, useState } from 'react';
+import { Track } from '@/sharesTypes/sharesTypes';
 import { CategoryTrack } from '@/sharesTypes/sharesTypes';
 import { AxiosError } from 'axios';
 import { ERROR_MESSAGES } from '@/constans/errorMessages';
+import { useSelector } from 'react-redux';
+import { fetchAllTracks } from '@/services/tracks/tracksApi';
 
 export default function CategoriesPlaylist() {
   const params = useParams();
-  console.log(params.id)
-  // const idTracks = Number(params.id)+ 1
-    const [tracks, setTracks] = useState<[]>([]);
-    const [error, setError] = useState('');
+  console.log(params.id);
 
-    const idTracks = Number(params.id);
+  const [allTracks, setAllTracks] = useState<Track[]>([]);
+  const [tracks, setTracks] = useState<[]>([]);
+  const [error, setError] = useState('');
 
-    if (isNaN(idTracks)) {
-  // можно отрендерить ошибку
-  return <div>Некорректный ID плейлиста</div>;
-}
+  const idTracks = Number(params.id);
+
+  // if (playList.length === 0) {
+  //   console.log('Need to load data from server')
+  // }
 
   const getTracksById = useCallback(async () => {
     try {
+      const allTracksdata = await fetchAllTracks();
       const data = await fetchTracksByID(idTracks);
+      if (allTracksdata) setAllTracks(allTracksdata);
       if (data) setTracks(data.items);
-      console.log(data.name)
+      console.log(data.name);
       console.log(data.items);
-       console.log(data._id);
+      console.log(allTracks);
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response) {
@@ -42,19 +46,24 @@ export default function CategoriesPlaylist() {
           setError(ERROR_MESSAGES.UNKNOWN_ERROR);
         }
       }
-    
     }
   }, []);
 
   useEffect(() => {
-    getTracksById(); // ← именно вызываем функцию
+    getTracksById();
   }, []);
 
-
+  useEffect(() => {
+    console.log('allTracks обновился:', allTracks);
+  }, [allTracks]);
 
   return (
     <>
-      <CenterBlock title={`Плейлист дня ${params.id}`} tracks={tracks}  error={error}/>
+      <CenterBlock
+        title={`Плейлист дня ${params.id}`}
+        tracks={tracks}
+        error={error}
+      />
     </>
   );
 }

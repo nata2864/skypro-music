@@ -11,10 +11,16 @@ export async function fetchAllTracks(): Promise<Track[]> {
   }
 }
 
-export async function fetchTracksByID(id): Promise<Track[]> {
+export async function fetchTracksByID(id: string | number): Promise<Track[]> {
+   const correctedId = Number(id) + 1
+
+   
+  if (isNaN(correctedId)) {
+    throw new Error('Некорректный ID');
+  }
   try {
-    const response = await api.get(API_ENDPOINTS.GET_SELECTION_BY_ID(id));
-    //  const response = await api.get(`https://webdev-music-003b5b991590.herokuapp.com/catalog/selection/${id}/`)
+    const response = await api.get(API_ENDPOINTS.GET_SELECTION_BY_ID(correctedId));
+ 
      console.log(response)
     
     return response.data.data; // проверь, что именно приходит: data.tracks или просто data

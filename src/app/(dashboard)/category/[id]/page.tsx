@@ -12,17 +12,24 @@ import { ERROR_MESSAGES } from '@/constans/errorMessages';
 export default function CategoriesPlaylist() {
   const params = useParams();
   console.log(params.id)
+  // const idTracks = Number(params.id)+ 1
     const [tracks, setTracks] = useState<[]>([]);
     const [error, setError] = useState('');
 
-    
+    const idTracks = Number(params.id);
+
+    if (isNaN(idTracks)) {
+  // можно отрендерить ошибку
+  return <div>Некорректный ID плейлиста</div>;
+}
 
   const getTracksById = useCallback(async () => {
     try {
-      const data = await fetchTracksByID(params.id);
+      const data = await fetchTracksByID(idTracks);
       if (data) setTracks(data.items);
       console.log(data.name)
       console.log(data.items);
+       console.log(data._id);
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response) {

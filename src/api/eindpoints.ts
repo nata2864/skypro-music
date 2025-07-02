@@ -9,5 +9,5 @@ export const API_ENDPOINTS = {
   // CREATE_SELECTION: '/catalog/selection',
   // GET_ALL_SELECTIONS: '/catalog/selection/all',
   //  GET_SELECTION_BY_ID:  `/catalog/selection`
-    GET_SELECTION_BY_ID: (id: string) => `/catalog/selection/${id}/`
+    GET_SELECTION_BY_ID: (id:  string | number) => `/catalog/selection/${id}/`
 };

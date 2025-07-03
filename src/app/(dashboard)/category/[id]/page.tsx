@@ -8,32 +8,29 @@ import { Track } from '@/sharesTypes/sharesTypes';
 import { CategoryTrack } from '@/sharesTypes/sharesTypes';
 import { AxiosError } from 'axios';
 import { ERROR_MESSAGES } from '@/constans/errorMessages';
-import { useSelector } from 'react-redux';
 import { fetchAllTracks } from '@/services/tracks/tracksApi';
 
 export default function CategoriesPlaylist() {
   const params = useParams();
-  console.log(params.id);
-
-  const [allTracks, setAllTracks] = useState<Track[]>([]);
-  const [tracks, setTracks] = useState<[]>([]);
-  const [error, setError] = useState('');
-
   const idTracks = Number(params.id);
 
-  // if (playList.length === 0) {
-  //   console.log('Need to load data from server')
-  // }
+  const [tracks, setTracks] = useState<CategoryTrack | null>(null);
+  const [filteredTracks, setFilteredTracks] = useState<Track[]>([]);
+  const [error, setError] = useState('');
 
   const getTracksById = useCallback(async () => {
     try {
       const allTracksdata = await fetchAllTracks();
       const data = await fetchTracksByID(idTracks);
-      if (allTracksdata) setAllTracks(allTracksdata);
-      if (data) setTracks(data.items);
-      console.log(data.name);
-      console.log(data.items);
-      console.log(allTracks);
+
+      if (data) setTracks(data);
+
+      const filteredSortedTracks = data.items
+        .map((id) => allTracksdata.find((track) => track._id === id))
+        .filter((track): track is Track => track !== undefined);
+
+      console.log('Фильтрованные треки:', filteredSortedTracks);
+      setFilteredTracks(filteredSortedTracks);
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response) {
@@ -47,21 +44,17 @@ export default function CategoriesPlaylist() {
         }
       }
     }
-  }, []);
+  }, [idTracks]);
 
   useEffect(() => {
     getTracksById();
   }, []);
 
-  useEffect(() => {
-    console.log('allTracks обновился:', allTracks);
-  }, [allTracks]);
-
   return (
     <>
       <CenterBlock
-        title={`Плейлист дня ${params.id}`}
-        tracks={tracks}
+        title={tracks?.name || ''}
+        tracks={filteredTracks}
         error={error}
       />
     </>

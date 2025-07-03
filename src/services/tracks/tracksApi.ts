@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from '../../api/eindpoints';
 import api from '@/api/axious';
-import { Track } from '@/sharesTypes/sharesTypes';
+import { Track,CategoryTrack } from '@/sharesTypes/sharesTypes';
 
 export async function fetchAllTracks(): Promise<Track[]> {
   try {
@@ -11,7 +11,7 @@ export async function fetchAllTracks(): Promise<Track[]> {
   }
 }
 
-export async function fetchTracksByID(id: string | number): Promise<Track[]> {
+export async function fetchTracksByID(id: string | number): Promise<CategoryTrack> {
    const correctedId = Number(id) + 1
 
    

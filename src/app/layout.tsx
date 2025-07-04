@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@store/ReduxProvider';
+import { ToastContainer } from 'react-toastify';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -25,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <ReduxProvider>
-        <body className={montserrat.variable}>{children}</body>
+        <body className={montserrat.variable}>{children}
+            <ToastContainer />
+        </body>
       </ReduxProvider>
     </html>
   );

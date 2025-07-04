@@ -2,6 +2,7 @@
 
 import { ERROR_MESSAGES } from '@/constans/errorMessages';
 import { useState } from 'react';
+import { emptyFieldsValidator } from '@/validators/emptyFieldsValidator';
 
 type FormData = Record<string, string>;
 type Errors = Record<string, boolean>;
@@ -21,22 +22,19 @@ export const useFormValidation = (initialFields: FormData) => {
   };
 
   const validateForm = (requiredFields: string[]): boolean => {
-    let newErrors: Errors = {};
-    let isValid = true;
+    const { hasEmpty, errors: emptyErrors } = emptyFieldsValidator(
+      formData,
+      requiredFields,
+    );
 
-    for (const field of requiredFields) {
-      if (!formData[field]?.trim()) {
-        newErrors[field] = true;
-        isValid = false;
-      }
-    }
-
-    if (!isValid) {
+    if (hasEmpty) {
+      setErrors(emptyErrors);
       setError(ERROR_MESSAGES.REQUIRED_FIELDS);
+      return false;
     }
-
-    setErrors(newErrors);
-    return isValid;
+    setErrors({});
+    setError('');
+    return true;
   };
 
   return {

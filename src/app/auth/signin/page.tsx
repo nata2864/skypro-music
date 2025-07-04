@@ -6,69 +6,49 @@ import styles from './signin.module.css';
 import { useFormValidation } from '../useFormValidation';
 import { signInUser } from '@/services/auth/authApi';
 import { useState } from 'react';
-import { AxiosError } from 'axios';
-import { ERROR_MESSAGES } from '@/constans/errorMessages';
+import { handleAxiosError } from '@/utils/handleAxiosError';
 
 
 export default function SighInPage() {
+  const [errorServer, setErrorServer] = useState('');
+  const { formData, error, handleChange, validateForm } = useFormValidation({
+    email: '',
+    password: '',
+  });
 
-  const [errorServer, setErrorServer]= useState('');
-  const {
-    formData,
-    error,
-    handleChange,
-    validateForm,
-  } = useFormValidation({ login: '', password: '' });
+  const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('Клик');
 
-const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.preventDefault();
-  console.log('Клик');
+    if (!validateForm(['email', 'password'])) {
+      console.log('❌ Валидация не прошла');
+      return;
+    }
 
-  if (!validateForm(['login', 'password'])) {
-    console.log('❌ Валидация не прошла');
-    return;
-  }
-
-  console.log('✅ Валидация прошла');
-
-  signInUser({
-    login: formData.login,
-    password: formData.password,
-  })
-    .then((response) => {
-      console.log('Успех:', response);
-      // тут можешь сделать редирект, очистку формы и т.п.
+    console.log('✅ Валидация прошла');
+    console.log('Форма:', formData);
+    signInUser({
+      email: formData.email,
+      password: formData.password,
     })
-    .catch((errorServer) => {
-      if (errorServer instanceof AxiosError) {
-        if (errorServer.response) {
-          console.log('Ответ сервера с ошибкой:', errorServer.response.data);
-          setErrorServer(errorServer.response.data.message);
-        } else if (errorServer.request) {
-          console.log('Ошибка сети:', errorServer.request);
-          setErrorServer(ERROR_MESSAGES.NETWORK_ERROR);
-        } else {
-          console.log('Неизвестная ошибка:', errorServer.message);
-          setErrorServer(ERROR_MESSAGES.UNKNOWN_ERROR);
-        }
-      } else {
-        console.log('Нестандартная ошибка:', errorServer);
-        setErrorServer(ERROR_MESSAGES.UNKNOWN_ERROR);
-      }
-
-      console.log('Ошибка пришла:', errorServer);
-    });
-};
+      .then((response) => {
+        console.log('Успех:', response);
+        // тут можешь сделать редирект, очистку формы и т.п.
+      })
+      .catch((errorServer) => {
+        handleAxiosError(errorServer);
+      });
+  };
 
   return (
     <>
       <input
         className={classNames(styles.modal__input, styles.login)}
-       type="email"
-        name="login"
+        type="email"
+        name="email"
         placeholder="Почта"
         onChange={handleChange}
-        value={formData.login}
+        value={formData.email}
       />
       <input
         className={classNames(styles.modal__input)}
@@ -79,7 +59,7 @@ const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         value={formData.password}
       />
       <div className={styles.errorContainer}>{error}</div>
-       <div className={styles.errorContainer}>{errorServer}</div>
+      <div className={styles.errorContainer}>{errorServer}</div>
       <Link href="./">
         <button
           type="button"

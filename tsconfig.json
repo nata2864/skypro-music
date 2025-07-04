@@ -29,7 +29,8 @@
       "@api/*": ["./api/*"],
       "@services/*": ["./services/*"],
       "@constans/*": ["./constans/*"],
-      "@app/*": ["./app/*"]
+      "@app/*": ["./app/*"],
+      "@validators/*": ["./validators/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

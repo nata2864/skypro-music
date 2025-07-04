@@ -29,7 +29,6 @@ export default function CategoriesPlaylist() {
         .map((id) => allTracksdata.find((track) => track._id === id))
         .filter((track): track is Track => track !== undefined);
 
-      console.log('Фильтрованные треки:', filteredSortedTracks);
       setFilteredTracks(filteredSortedTracks);
     } catch (error) {
       if (error instanceof AxiosError) {

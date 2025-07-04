@@ -6,13 +6,10 @@ import { Track } from '@/sharesTypes/sharesTypes';
 import { AxiosError } from 'axios';
 import { useEffect, useCallback, useState } from 'react';
 import { ERROR_MESSAGES } from '@/constans/errorMessages';
- import { useSelector } from 'react-redux';
 
 export default function Home() {
   const [tracks, setTracks] = useState<Track[]>([]);
   const [error, setError] = useState('');
-
-
 
   const getAllTracks = useCallback(async () => {
     try {
@@ -38,12 +35,9 @@ export default function Home() {
     getAllTracks(); // ← именно вызываем функцию
   }, []);
 
-  
-
   return (
     <>
-    
-      <CenterBlock title="Треки" tracks={tracks} error={error}/>
+      <CenterBlock title="Треки" tracks={tracks} error={error} />
     </>
   );
 }

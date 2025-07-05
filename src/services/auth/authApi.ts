@@ -6,11 +6,10 @@ type signInUserProps = {
   password: string;
 };
 
-type signUpUserProps = {
-  email: string;
-  password: string;
+type signUpUserProps = signInUserProps & {
   username: string;
 };
+
 
 export async function signInUser(data: signInUserProps) {
   const response = await api.post(API_ENDPOINTS.SIGN_IN, data, {
@@ -23,6 +22,15 @@ export async function signInUser(data: signInUserProps) {
 
 export async function signUpUser(data: signUpUserProps) {
   const response = await api.post(API_ENDPOINTS.SIGN_UP, data, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
+}
+
+export async function postToken(data: signInUserProps) {
+  const response = await api.post(API_ENDPOINTS.GET_TOKEN, data, {
     headers: {
       'Content-Type': 'application/json',
     },

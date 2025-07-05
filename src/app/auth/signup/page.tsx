@@ -29,6 +29,7 @@ export default function SighUpPage() {
     };
 
     signUpUser(dataToSend)
+    
       .then((response) => {
         router.push('/auth/signin');
       })

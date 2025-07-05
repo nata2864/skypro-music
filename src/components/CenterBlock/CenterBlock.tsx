@@ -4,9 +4,7 @@ import Filter from '../Filter/Filter';
 import Search from '../Search/Search';
 import PlayListHeader from '../PlaylistHeader/PlaylistHeader';
 import { Track } from '@/sharesTypes/sharesTypes';
-import { data } from '@/app/data';
 import { getUniqueValuesByKey } from '@/utils/helper';
-
 
 type FilterOption = {
   title: string;
@@ -16,14 +14,12 @@ type FilterOption = {
 export default function CenterBlock({
   title,
   tracks,
-
 }: {
   title: string;
   tracks: Track[];
-
 }) {
-  const genres = getUniqueValuesByKey(data, 'genre');
-  const authors = getUniqueValuesByKey(data, 'author');
+  const genres = getUniqueValuesByKey(tracks, 'genre');
+  const authors = getUniqueValuesByKey(tracks, 'author');
 
   const filters: FilterOption[] = [
     { title: 'исполнителю', options: authors },
@@ -36,7 +32,7 @@ export default function CenterBlock({
   return (
     <div className={styles.centerblock}>
       <Search />
-     
+
       <h2 className={styles.centerblock__h2}>{title}</h2>
       <Filter filters={filters} />
       <div className={styles.centerblock__content}>

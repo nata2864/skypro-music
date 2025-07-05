@@ -26,7 +26,11 @@
       "@data/*": ["./data/*"],
       "@sharesTypes/*": ["./sharesTypes/*"],
       "@store/*": ["./store/*"],
-
+      "@api/*": ["./api/*"],
+      "@services/*": ["./services/*"],
+      "@constans/*": ["./constans/*"],
+      "@app/*": ["./app/*"],
+      "@validators/*": ["./validators/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

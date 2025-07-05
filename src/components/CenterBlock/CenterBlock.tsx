@@ -3,8 +3,7 @@ import PlayList from '../PlayList/Playlist';
 import Filter from '../Filter/Filter';
 import Search from '../Search/Search';
 import PlayListHeader from '../PlaylistHeader/PlaylistHeader';
-
-import { data } from '@/app/data';
+import { Track } from '@/sharesTypes/sharesTypes';
 import { getUniqueValuesByKey } from '@/utils/helper';
 
 type FilterOption = {
@@ -12,9 +11,15 @@ type FilterOption = {
   options: string[];
 };
 
-export default function CenterBlock({ title }: { title: string }) {
-  const genres = getUniqueValuesByKey(data, 'genre');
-  const authors = getUniqueValuesByKey(data, 'author');
+export default function CenterBlock({
+  title,
+  tracks,
+}: {
+  title: string;
+  tracks: Track[];
+}) {
+  const genres = getUniqueValuesByKey(tracks, 'genre');
+  const authors = getUniqueValuesByKey(tracks, 'author');
 
   const filters: FilterOption[] = [
     { title: 'исполнителю', options: authors },
@@ -27,11 +32,12 @@ export default function CenterBlock({ title }: { title: string }) {
   return (
     <div className={styles.centerblock}>
       <Search />
+
       <h2 className={styles.centerblock__h2}>{title}</h2>
       <Filter filters={filters} />
       <div className={styles.centerblock__content}>
         <PlayListHeader />
-        <PlayList data={data} />
+        <PlayList data={tracks} />
       </div>
     </div>
   );

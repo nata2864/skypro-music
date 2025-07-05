@@ -7,7 +7,7 @@ export default function SideBar() {
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
         <p className={styles.sidebar__personalName}>Sergey.Ivanov</p>
-        <Link href="/sign-in">
+        <Link href="/auth/signin">
           <div className={styles.sidebar__icon} role="button" title="Выйти">
             <svg>
               <use xlinkHref="/img/icon/sprite.svg#logout"></use>
@@ -18,7 +18,7 @@ export default function SideBar() {
       <div className={styles.sidebar__block}>
         <div className={styles.sidebar__list}>
           <div className={styles.sidebar__item}>
-            <Link className={styles.sidebar__link} href="/daily-playlist">
+            <Link className={styles.sidebar__link} href="/category/1">
               <Image
                 className={styles.sidebar__img}
                 src="/img/playlist01.png"
@@ -29,7 +29,7 @@ export default function SideBar() {
             </Link>
           </div>
           <div className={styles.sidebar__item}>
-            <Link className={styles.sidebar__link} href="/dance-hits">
+            <Link className={styles.sidebar__link} href="/category/2">
               <Image
                 className={styles.sidebar__img}
                 src="/img/playlist02.png"
@@ -40,7 +40,7 @@ export default function SideBar() {
             </Link>
           </div>
           <div className={styles.sidebar__item}>
-            <Link className={styles.sidebar__link} href="/indie-boost">
+            <Link className={styles.sidebar__link} href="/category/3">
               <Image
                 className={styles.sidebar__img}
                 src="/img/playlist03.png"

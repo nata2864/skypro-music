@@ -16,11 +16,11 @@ type FilterOption = {
 export default function CenterBlock({
   title,
   tracks,
-  error,
+
 }: {
   title: string;
   tracks: Track[];
-  error: string;
+
 }) {
   const genres = getUniqueValuesByKey(data, 'genre');
   const authors = getUniqueValuesByKey(data, 'author');
@@ -36,7 +36,7 @@ export default function CenterBlock({
   return (
     <div className={styles.centerblock}>
       <Search />
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+     
       <h2 className={styles.centerblock__h2}>{title}</h2>
       <Filter filters={filters} />
       <div className={styles.centerblock__content}>

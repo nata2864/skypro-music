@@ -1,16 +1,11 @@
-import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
 export const handleAxiosError = (error: unknown): void => {
-      console.log('🪵 handleAxiosError получил:', error);
   let message = 'Произошла неизвестная ошибка';
 
   if (axios.isAxiosError(error)) {
     if (error.response) {
-            console.log('📦 error.response:', error.response);
-      console.log('📄 error.response.data:', error.response.data);
-      console.log('🔢 error.response.status:', error.response.status);
       const status = error.response.status;
       const serverMessage = error.response.data?.message;
 
@@ -19,16 +14,18 @@ export const handleAxiosError = (error: unknown): void => {
           message = serverMessage || 'Некорректный запрос';
           break;
         case 401:
-          message = 'Неавторизован. Пожалуйста, войдите заново.';
+          message = 'Пользователь с таким email или паролем не найден';
           break;
         case 403:
-          message = 'Доступ запрещён';
+          message = 'Введенный Email уже занят';
           break;
         case 404:
           message = 'Ресурс не найден';
           break;
         case 412:
-          message = serverMessage || 'Запрос отклонён. Требуется выполнение дополнительных условий.';
+          message =
+            serverMessage ||
+            'Запрос отклонён. Требуется выполнение дополнительных условий';
           break;
         case 500:
           message = 'Ошибка на сервере. Попробуйте позже.';

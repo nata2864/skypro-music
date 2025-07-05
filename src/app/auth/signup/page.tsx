@@ -3,42 +3,38 @@
 import styles from './signup.module.css';
 import classNames from 'classnames';
 import { useFormValidation } from '../useFormValidation';
-import { useState } from 'react';
-;
+import { useRouter } from 'next/navigation';
 import { signUpUser } from '@/services/auth/authApi';
 import { handleAxiosError } from '@/utils/handleAxiosError';
 
 export default function SighUpPage() {
-  const [errorServer, setErrorServer]= useState('');
-    const {
-      formData,
-      error,
-      handleChange,
-      validateForm,
-    } = useFormValidation({ email: '', username: '', password: '' });
+  const router = useRouter();
+  const { formData, error, handleChange, validateForm } = useFormValidation({
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('Клик');
-  
-    if (!validateForm(['email', 'password','username'])) {
-      console.log('❌ Валидация не прошла');
+
+    if (!validateForm(['email', 'password', 'username', 'confirmPassword'])) {
       return;
     }
-  
-    console.log('✅ Валидация прошла');
-  console.log('Форма:', formData);
-    signUpUser({
+
+    const dataToSend = {
       email: formData.email,
       password: formData.password,
-      username:formData.username
-    })
+      username: formData.username,
+    };
+
+    signUpUser(dataToSend)
       .then((response) => {
-        console.log('Успех:', response);
-        // тут можешь сделать редирект, очистку формы и т.п.
+        router.push('/auth/signin');
       })
-      .catch((errorServer) => {
-              handleAxiosError(errorServer);
-            });
+      .catch((error) => {
+        handleAxiosError(error);
+      });
   };
   return (
     <>
@@ -61,13 +57,22 @@ export default function SighUpPage() {
       <input
         className={styles.modal__input}
         type="password"
-        name="username"
+        name="confirmPassword"
         placeholder="Повторите пароль"
+        onChange={handleChange}
+        value={formData.confirmPassword}
+      />
+
+      <input
+        className={styles.modal__input}
+        type="text"
+        name="username"
+        placeholder="Ник"
         onChange={handleChange}
         value={formData.username}
       />
       <div className={styles.errorContainer}>{error}</div>
-        <div className={styles.errorContainer}>{errorServer}</div>
+
       <button
         type="submit"
         onClick={onSubmit}

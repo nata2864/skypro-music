@@ -5,12 +5,12 @@ import Link from 'next/link';
 import styles from './signin.module.css';
 import { useFormValidation } from '../useFormValidation';
 import { signInUser } from '@/services/auth/authApi';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import { handleAxiosError } from '@/utils/handleAxiosError';
 
-
 export default function SighInPage() {
-  const [errorServer, setErrorServer] = useState('');
+  const router = useRouter();
   const { formData, error, handleChange, validateForm } = useFormValidation({
     email: '',
     password: '',
@@ -18,25 +18,20 @@ export default function SighInPage() {
 
   const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('Клик');
 
     if (!validateForm(['email', 'password'])) {
-      console.log('❌ Валидация не прошла');
       return;
     }
 
-    console.log('✅ Валидация прошла');
-    console.log('Форма:', formData);
     signInUser({
       email: formData.email,
       password: formData.password,
     })
       .then((response) => {
-        console.log('Успех:', response);
-        // тут можешь сделать редирект, очистку формы и т.п.
+        router.push('/');
       })
-      .catch((errorServer) => {
-        handleAxiosError(errorServer);
+      .catch((error) => {
+        handleAxiosError(error);
       });
   };
 
@@ -59,7 +54,7 @@ export default function SighInPage() {
         value={formData.password}
       />
       <div className={styles.errorContainer}>{error}</div>
-      <div className={styles.errorContainer}>{errorServer}</div>
+
       <Link href="./">
         <button
           type="button"

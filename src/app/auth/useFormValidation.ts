@@ -29,7 +29,7 @@ export const useFormValidation = (initialFields: FormData) => {
 
     if (hasEmpty) {
       setErrors(emptyErrors);
-      setError(ERROR_MESSAGES.REQUIRED_FIELDS);
+      setError('Пожалуйста, заполните все поля');
       return false;
     }
     setErrors({});

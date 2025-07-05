@@ -65,7 +65,7 @@ export default function SighInPage() {
         </button>
       </Link>
 
-      <Link href="./signup" className={styles.modal__btnSignup}>
+      <Link href="./auth/signup" className={styles.modal__btnSignup}>
         Зарегистрироваться
       </Link>
     </>

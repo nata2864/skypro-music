@@ -9,7 +9,12 @@ type FilterItemProps = {
   onToggle: () => void;
 };
 
-export default function FilterItem({ title, options, isActive, onToggle }: FilterItemProps) {
+export default function FilterItem({
+  title,
+  options,
+  isActive,
+  onToggle,
+}: FilterItemProps) {
   return (
     <div className={styles.filterItemWrapper}>
       <div
@@ -20,7 +25,7 @@ export default function FilterItem({ title, options, isActive, onToggle }: Filte
       >
         {title}
       </div>
-      <PopUp options={options}  isVisible={isActive}  />
+      <PopUp options={options} title={title} isVisible={isActive} />
     </div>
   );
 }

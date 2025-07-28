@@ -1,5 +1,4 @@
 import { clearUser } from '@store/features/authSlice';
-
 import type { AppDispatch } from '@store/store';
 
 export const logout = (

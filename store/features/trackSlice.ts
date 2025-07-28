@@ -4,10 +4,16 @@ import { shuffleArray } from '@/utils/random';
 
 type initialStateType = {
   currentTrack: Track | null;
+  favoritePlayList: Track[];
   isPlay: boolean;
   isShuffle: boolean;
   playList: Track[];
   shuffledPlayList: Track[];
+  isLoading: boolean;
+  selectedAuthors: string[];
+  selectedGenres: string[];
+  sortOption: string;
+  searchInput: string;
 };
 
 const initialState: initialStateType = {
@@ -15,7 +21,13 @@ const initialState: initialStateType = {
   isPlay: false,
   isShuffle: false,
   playList: [],
+  favoritePlayList: [],
   shuffledPlayList: [],
+  isLoading: true,
+  selectedAuthors: [],
+  selectedGenres: [],
+  sortOption: 'По умолчанию',
+  searchInput: '',
 };
 
 function getActivePlayList(state: initialStateType): Track[] {
@@ -96,6 +108,43 @@ const trackSlice = createSlice({
       state.currentTrack = playList[previousIndex];
       state.isPlay = true;
     },
+    setFavoritePlayList(state, action: PayloadAction<Track[]>) {
+      state.favoritePlayList = action.payload;
+    },
+    addLikedTracks(state, action: PayloadAction<Track>) {
+      state.favoritePlayList = [...state.favoritePlayList, action.payload];
+    },
+    removeLikedTracks(state, action: PayloadAction<Track>) {
+      state.favoritePlayList = state.favoritePlayList.filter(
+        (track) => track._id !== action.payload._id,
+      );
+    },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    toggleAuthor: (state, action: PayloadAction<string>) => {
+      const author = action.payload;
+      state.selectedAuthors = state.selectedAuthors.includes(author)
+        ? state.selectedAuthors.filter((a) => a !== author)
+        : [...state.selectedAuthors, author];
+    },
+    toggleGenre: (state, action: PayloadAction<string>) => {
+      const genre = action.payload;
+      state.selectedGenres = state.selectedGenres.includes(genre)
+        ? state.selectedGenres.filter((g) => g !== genre)
+        : [...state.selectedGenres, genre];
+    },
+    setSortOption: (state, action: PayloadAction<string>) => {
+      state.sortOption = action.payload;
+    },
+    resetFilters(state) {
+      state.selectedAuthors = [];
+      state.selectedGenres = [];
+      state.sortOption = 'По умолчанию';
+    },
+    setSearchInput: (state, action: PayloadAction<string>) => {
+      state.searchInput = action.payload;
+    },
   },
 });
 
@@ -106,6 +155,15 @@ export const {
   setNextTrack,
   setPreviousTrack,
   toggleShuffle,
+  addLikedTracks,
+  removeLikedTracks,
+  setFavoritePlayList,
+  setIsLoading,
+  toggleAuthor,
+  toggleGenre,
+  setSortOption,
+  resetFilters,
+  setSearchInput,
 } = trackSlice.actions;
 
 export const trackSliceReducer = trackSlice.reducer;

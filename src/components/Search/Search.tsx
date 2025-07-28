@@ -1,13 +1,15 @@
 'use client';
 
 import styles from './Seach.module.css';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@store/store';
+import { setSearchInput } from '@store/features/trackSlice';
 
 export default function Search() {
-  const [searchInput, setSearchInput] = useState('');
+  const dispatch = useAppDispatch();
+  const searchInput = useAppSelector((store) => store.tracks.searchInput);
 
   const onSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
+    dispatch(setSearchInput(e.target.value));
   };
 
   return (

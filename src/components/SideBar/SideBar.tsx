@@ -1,15 +1,12 @@
-
-
 import SidebarUserInfo from '../SideBarUserInfo/SideBarUserInfo';
 import styles from './Sidebar.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
 function SideBar() {
-
   return (
     <div className={styles.main__sidebar}>
-  <SidebarUserInfo />
+      <SidebarUserInfo />
       <div className={styles.sidebar__block}>
         <div className={styles.sidebar__list}>
           <div className={styles.sidebar__item}>
@@ -51,4 +48,4 @@ function SideBar() {
   );
 }
 
-export default SideBar
+export default SideBar;

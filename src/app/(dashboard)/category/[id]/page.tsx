@@ -4,23 +4,31 @@ import CenterBlock from '@/components/CenterBlock/CenterBlock';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { Track } from '@/sharesTypes/sharesTypes';
-import { CategoryTrack } from '@/sharesTypes/sharesTypes';
-import { fetchAllTracks, fetchTracksByID } from '@/services/tracks/tracksApi';
+import { setIsLoading, setCurrentPlayList } from '@store/features/trackSlice';
+import {  fetchAllTracks, fetchTracksByID } from '@/services/tracks/tracksApi';
 import { handleAxiosError } from '@/utils/handleAxiosError';
+import { useAppSelector, useAppDispatch } from '@store/store';
 
 export default function CategoriesPlaylist() {
   const params = useParams();
   const idTracks = Number(params.id);
-
-  const [tracks, setTracks] = useState<CategoryTrack | null>(null);
+  const isLoading = useAppSelector((state) => state.tracks.isLoading);
+  const tracks = useAppSelector((state) => state.tracks.playList);
+  const dispatch = useAppDispatch();
+  const [titlePlayList, settitlePlayList] = useState('');
   const [filteredTracks, setFilteredTracks] = useState<Track[]>([]);
 
   const getTracksById = useCallback(async () => {
+     dispatch(setIsLoading(true));
     try {
-      const allTracksdata = await fetchAllTracks();
+      let allTracksdata = tracks;
+      if (allTracksdata.length === 0) {
+      allTracksdata = await fetchAllTracks();
+      dispatch(setCurrentPlayList(allTracksdata));
+    }
       const data = await fetchTracksByID(idTracks);
 
-      if (data) setTracks(data);
+      if (data) settitlePlayList(data.name);
 
       const filteredSortedTracks = data.items
         .map((id) => allTracksdata.find((track) => track._id === id))
@@ -30,7 +38,10 @@ export default function CategoriesPlaylist() {
     } catch (error) {
       handleAxiosError(error);
     }
-  }, [idTracks]);
+    finally {
+      dispatch(setIsLoading(false));
+    }
+  }, [idTracks,dispatch]);
 
   useEffect(() => {
     getTracksById();
@@ -38,7 +49,11 @@ export default function CategoriesPlaylist() {
 
   return (
     <>
-      <CenterBlock title={tracks?.name || ''} tracks={filteredTracks} />
+      <CenterBlock
+        title={titlePlayList}
+        tracks={filteredTracks}
+        isLoading={isLoading}
+      />
     </>
   );
 }

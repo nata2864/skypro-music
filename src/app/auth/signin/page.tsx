@@ -43,7 +43,7 @@ export default function SighInPage() {
         email: formData.email,
         password: formData.password,
       });
-   
+
       dispatch(setAccessToken(response.access));
       dispatch(setRefreshToken(response.refresh));
       router.push('/');

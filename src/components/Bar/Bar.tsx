@@ -13,6 +13,7 @@ import {
   setPreviousTrack,
   toggleShuffle,
 } from '@store/features/trackSlice';
+import { useLikeTrack } from '@/hooks/useLikeTrack';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
@@ -25,6 +26,7 @@ export default function Bar() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  const { toggleLike, isLike } = useLikeTrack(currentTrack);
 
   useEffect(() => {
     if (currentTrack && getAudio()) {
@@ -207,18 +209,13 @@ export default function Bar() {
                     styles.btnIcon,
                   )}
                 >
-                  <svg className={styles.trackPlay__likeSvg}>
-                    <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
-                  </svg>
-                </div>
-                <div
-                  className={classNames(
-                    styles.trackPlay__dislike,
-                    styles.btnIcon,
-                  )}
-                >
-                  <svg className={styles.trackPlay__dislikeSvg}>
-                    <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
+                  <svg
+                    className={styles.trackPlay__likeSvg}
+                    onClick={toggleLike}
+                  >
+                    <use
+                      xlinkHref={`/img/icon/sprite.svg#${isLike ? 'icon-like' : 'icon-dislike'}`}
+                    ></use>
                   </svg>
                 </div>
               </div>

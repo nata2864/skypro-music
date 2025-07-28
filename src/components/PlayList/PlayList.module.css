@@ -7,4 +7,24 @@
   -ms-flex-direction: column;
   flex-direction: column;
   overflow-y: auto;
+  height: calc(100vh - 480px);
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.content__playlist::-webkit-scrollbar {
+  display: none;
+}
+
+.emptyText {
+  color: white;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  text-align: center;
 }
